@@ -1,25 +1,34 @@
-import Head from "next/head";
-import styles from "../styles/Home.module.css";
-import DynamicText from "../components/DynamicText";
+import React, { useRef } from 'react'
+import Head from 'next/head'
+import { Box, Flex, Input } from '@chakra-ui/react'
+
+import DynamicText from 'components/DynamicText'
+import styles from 'styles/Home.module.css'
 
 const Home = () => {
+  const dynamicTextRef = useRef<DynamicText>(undefined)
+
   const onChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-    console.log(e.target.value);
-  };
+    const newValue = e.target.value
+    console.log(newValue)
+    dynamicTextRef.current.changeValue(newValue)
+  }
 
   return (
-    <div className={styles.container}>
+    <Box className={styles.container}>
       <Head>
         <title>Coding Test</title>
+
         <link rel="icon" href="/favicon.ico" />
       </Head>
 
-      <main className={styles.main}>
-        <DynamicText />
-        <input onChange={onChange} />
-      </main>
-    </div>
-  );
-};
+      <Flex className={styles.main}>
+        <DynamicText ref={dynamicTextRef} />
 
-export default Home;
+        <Input onChange={onChange} />
+      </Flex>
+    </Box>
+  )
+}
+
+export default Home
